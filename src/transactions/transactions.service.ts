@@ -1,21 +1,26 @@
 import { Injectable } from '@nestjs/common';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { UpdateTransactionDto } from './dto/update-transaction.dto';
 
 @Injectable()
 export class TransactionsService {
-  // constructor(
-  //   @InjectModel(Transaction.name)
-  //   private transactionModel: Model<TransactionDocument>,
-  // ) {}
-  // async getAllTransactions(): Promise<Transaction[]> {
-  //   return await this.transactionModel.find().exec();
-  // }
-  // async createTransaction(): Promise<Transaction> {
-  //   const created = new this.transactionModel({
-  //     from: 'abc',
-  //     to: 'aa',
-  //     block: 1207512,
-  //     hash: 'dd',
-  //   });
-  //   return created.save();
-  // }
+  create(createTransactionDto: CreateTransactionDto) {
+    return 'This action adds a new transaction';
+  }
+
+  findAll() {
+    return `This action returns all transactions`;
+  }
+
+  findOne(id: number) {
+    return `This action returns a #${id} transaction`;
+  }
+
+  update(id: number, updateTransactionDto: UpdateTransactionDto) {
+    return `This action updates a #${id} transaction`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} transaction`;
+  }
 }

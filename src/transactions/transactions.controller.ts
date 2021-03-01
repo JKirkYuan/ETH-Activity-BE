@@ -1,18 +1,34 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { UpdateTransactionDto } from './dto/update-transaction.dto';
 
 @Controller('transactions')
 export class TransactionsController {
-  constructor(private transactionsServer: TransactionsService) {}
+  constructor(private readonly transactionsService: TransactionsService) {}
 
-  @Get('/')
-  async getTransactions() {
-    // const transactions = await this.transactionsServer.getAllTransactions();
-    // return transactions;
+  @Post()
+  create(@Body() createTransactionDto: CreateTransactionDto) {
+    return this.transactionsService.create(createTransactionDto);
   }
 
-  @Post('/')
-  createTransaction() {
-    // return this.transactionsServer.createTransaction();
+  @Get()
+  findAll() {
+    return this.transactionsService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.transactionsService.findOne(+id);
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateTransactionDto: UpdateTransactionDto) {
+    return this.transactionsService.update(+id, updateTransactionDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.transactionsService.remove(+id);
   }
 }
