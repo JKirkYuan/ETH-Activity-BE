@@ -5,19 +5,21 @@ import {
   Column,
   OneToMany,
 } from 'typeorm';
-import { Transaction } from '../../transactions/entities/transaction.entity';
+import { Transaction } from 'src/transactions/entities/transaction.entity';
 
 @Entity()
 export class Block extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  totalTxns: number;
+  @Column({ unique: true })
+  blockNumber: number;
 
   @Column()
   createdAt: Date;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.block)
+  @OneToMany(() => Transaction, (transaction) => transaction.block, {
+    cascade: true,
+  })
   transactions: Transaction[];
 }

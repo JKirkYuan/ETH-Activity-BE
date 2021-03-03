@@ -3,21 +3,18 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  OneToOne,
+  // OneToOne,
 } from 'typeorm';
-import { Transaction } from '../../transactions/entities/transaction.entity';
+// import { Transaction } from '../../transactions/entities/transaction.entity';
 
 @Entity()
 export class Address extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   name: string;
 
-  @Column()
-  address: string;
-
-  @OneToOne(() => Transaction, (transaction) => transaction.address)
-  transaction: Transaction;
+  @Column({ unique: true })
+  hash: string;
 }

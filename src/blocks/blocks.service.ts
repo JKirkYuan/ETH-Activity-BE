@@ -1,15 +1,22 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateBlockDto } from './dto/create-block.dto';
 import { UpdateBlockDto } from './dto/update-block.dto';
+import { BlockRepository } from './entities/block.repository';
 
 @Injectable()
 export class BlocksService {
+  constructor(
+    @InjectRepository(BlockRepository)
+    private blockRepository: BlockRepository,
+  ) {}
+
   create(createBlockDto: CreateBlockDto) {
-    return 'This action adds a new block';
+    return this.blockRepository.createBlock(createBlockDto);
   }
 
   findAll() {
-    return `This action returns all blocks`;
+    return this.blockRepository.getAllBlocks();
   }
 
   findOne(id: number) {

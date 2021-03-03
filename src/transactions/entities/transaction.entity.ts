@@ -4,10 +4,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  OneToOne,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
-import { Block } from '../../blocks/entities/block.entity';
-import { Address } from '../../addresses/entities/address.entity';
+import { Block } from 'src/blocks/entities/block.entity';
+import { Address } from 'src/addresses/entities/address.entity';
 
 @Entity()
 export class Transaction extends BaseEntity {
@@ -23,6 +24,7 @@ export class Transaction extends BaseEntity {
   @ManyToOne(() => Block, (block) => block.transactions)
   block: Block;
 
-  @OneToOne(() => Address, (address) => address.transaction)
-  address: Address;
+  @ManyToMany(() => Address)
+  @JoinTable()
+  addresses: Address[];
 }

@@ -7,12 +7,13 @@ import { TransactionsModule } from './transactions/transactions.module';
 
 const typeOrmConfig =
   process.env.NODE_ENV === 'production' ? typeOrmConfigProd : typeOrmConfigDev;
+
 @Module({
   imports: [
-    TypeOrmModule.forRoot(typeOrmConfig),
     TransactionsModule,
     BlocksModule,
     AddressesModule,
+    TypeOrmModule.forRoot(typeOrmConfig),
   ],
 })
 export class AppModule {}
