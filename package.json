@@ -1,8 +1,8 @@
 {
   "name": "eth-activity-be",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "BE Nestjs application to scrape and save Ethereum activity",
+  "author": "JKirkYuan",
   "private": true,
   "license": "MIT",
   "scripts": {
