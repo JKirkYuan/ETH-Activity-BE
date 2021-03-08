@@ -24,7 +24,7 @@ export class Transaction extends BaseEntity {
   @ManyToOne(() => Block, (block) => block.transactions)
   block: Block;
 
-  @ManyToMany(() => Address)
+  @ManyToMany(() => Address, (address) => address.transactions)
   @JoinTable()
   addresses: Address[];
 }

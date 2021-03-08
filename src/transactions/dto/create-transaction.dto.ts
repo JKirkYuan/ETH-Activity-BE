@@ -6,10 +6,4 @@ export class CreateTransactionDto {
 
   @IsNotEmpty()
   eth: number;
-
-  @IsNotEmpty()
-  block: number;
-
-  @IsNotEmpty()
-  addresses: string[];
 }

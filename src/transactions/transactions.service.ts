@@ -11,8 +11,18 @@ export class TransactionsService {
     private transactionRepository: TransactionRepository,
   ) {}
 
-  create(createTransactionDto: CreateTransactionDto) {
-    return this.transactionRepository.createTransaction(createTransactionDto);
+  create(
+    createTransactionDto: CreateTransactionDto,
+    block: number,
+    from: string,
+    to: string,
+  ) {
+    return this.transactionRepository.createTransaction(
+      createTransactionDto,
+      block,
+      from,
+      to,
+    );
   }
 
   findAll() {

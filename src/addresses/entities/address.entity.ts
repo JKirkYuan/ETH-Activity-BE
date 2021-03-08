@@ -3,9 +3,9 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  // OneToOne,
+  ManyToMany,
 } from 'typeorm';
-// import { Transaction } from '../../transactions/entities/transaction.entity';
+import { Transaction } from '../../transactions/entities/transaction.entity';
 
 @Entity()
 export class Address extends BaseEntity {
@@ -17,4 +17,7 @@ export class Address extends BaseEntity {
 
   @Column({ unique: true })
   hash: string;
+
+  @ManyToMany(() => Transaction, (transaction) => transaction.addresses)
+  transactions: Transaction[];
 }

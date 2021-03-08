@@ -4,37 +4,50 @@ import { Transaction } from './transaction.entity';
 import { Block } from 'src/blocks/entities/block.entity';
 import { BlockRepository } from 'src/blocks/entities/block.repository';
 import { Address } from 'src/addresses/entities/address.entity';
+import { AddressRepository } from 'src/addresses/entities/address.repository';
 
 @EntityRepository(Transaction)
 export class TransactionRepository extends Repository<Transaction> {
   async getAllTransactions(): Promise<Transaction[]> {
     const transactions = await this.find({
-      relations: ['block'],
+      relations: ['block', 'addresses'],
     });
     return transactions;
   }
 
   async createTransaction(
     createTransactionDto: CreateTransactionDto,
+    block: number,
+    from: string,
+    to: string,
   ): Promise<Transaction> {
     const blockRepo = getCustomRepository(BlockRepository);
-    const { txnDate, eth, block, addresses } = createTransactionDto;
+    const addrRepo = getCustomRepository(AddressRepository);
+
+    const { txnDate, eth } = createTransactionDto;
     const transaction = new Transaction();
     let currBlock = await blockRepo.getBlock(block);
+    let fromAddr = await addrRepo.getAddress(from);
+    let toAddr = await addrRepo.getAddress(to);
 
     transaction.txnDate = txnDate;
     transaction.eth = eth;
 
-    const addr1 = new Address();
-    addr1.hash = addresses[0];
-    addr1.name = addresses[0];
-    await addr1.save();
-    const addr2 = new Address();
-    addr2.hash = addresses[1];
-    addr2.name = addresses[1];
-    await addr2.save();
+    if (!fromAddr) {
+      fromAddr = new Address();
+      fromAddr.name = from;
+      fromAddr.hash = from;
+      await fromAddr.save();
+    }
 
-    transaction.addresses = [addr1, addr2];
+    if (!toAddr) {
+      toAddr = new Address();
+      toAddr.name = to;
+      toAddr.hash = to;
+      await toAddr.save();
+    }
+
+    transaction.addresses = [fromAddr, toAddr];
 
     if (!currBlock) {
       currBlock = new Block();
@@ -48,8 +61,6 @@ export class TransactionRepository extends Repository<Transaction> {
       await currBlock.save();
       await transaction.save();
     }
-
-    delete transaction.block;
 
     return transaction;
   }
