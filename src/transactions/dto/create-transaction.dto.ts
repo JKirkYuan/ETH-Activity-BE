@@ -5,5 +5,5 @@ export class CreateTransactionDto {
   txnDate: Date;
 
   @IsNotEmpty()
-  eth: number;
+  eth: string;
 }

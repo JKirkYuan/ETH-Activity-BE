@@ -19,7 +19,7 @@ export class Transaction extends BaseEntity {
   txnDate: Date;
 
   @Column()
-  eth: number;
+  eth: string;
 
   @ManyToOne(() => Block, (block) => block.transactions)
   block: Block;

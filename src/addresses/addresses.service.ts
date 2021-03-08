@@ -20,7 +20,10 @@ export class AddressesService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} address`;
+    return this.addressRepository.find({
+      where: { id },
+      relations: ['transactions'],
+    });
   }
 
   update(id: number, updateAddressDto: UpdateAddressDto) {
