@@ -35,16 +35,12 @@ export class TransactionRepository extends Repository<Transaction> {
 
     if (!fromAddr) {
       fromAddr = new Address();
-      fromAddr.name = from;
       fromAddr.hash = from;
-      await fromAddr.save();
     }
 
     if (!toAddr) {
       toAddr = new Address();
-      toAddr.name = to;
       toAddr.hash = to;
-      await toAddr.save();
     }
 
     transaction.addresses = [fromAddr, toAddr];
@@ -54,13 +50,11 @@ export class TransactionRepository extends Repository<Transaction> {
       currBlock.blockNumber = block;
       currBlock.createdAt = new Date();
       transaction.block = currBlock;
-      await currBlock.save();
-      await transaction.save();
     } else {
       transaction.block = currBlock;
-      await currBlock.save();
-      await transaction.save();
     }
+
+    await transaction.save();
 
     return transaction;
   }

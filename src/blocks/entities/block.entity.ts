@@ -18,8 +18,6 @@ export class Block extends BaseEntity {
   @Column()
   createdAt: Date;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.block, {
-    cascade: true,
-  })
+  @OneToMany(() => Transaction, (transaction) => transaction.block)
   transactions: Transaction[];
 }

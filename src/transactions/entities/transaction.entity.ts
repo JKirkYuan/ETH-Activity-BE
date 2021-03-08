@@ -21,10 +21,12 @@ export class Transaction extends BaseEntity {
   @Column()
   eth: string;
 
-  @ManyToOne(() => Block, (block) => block.transactions)
+  @ManyToOne(() => Block, (block) => block.transactions, { cascade: true })
   block: Block;
 
-  @ManyToMany(() => Address, (address) => address.transactions)
+  @ManyToMany(() => Address, (address) => address.transactions, {
+    cascade: true,
+  })
   @JoinTable()
   addresses: Address[];
 }

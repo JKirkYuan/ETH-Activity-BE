@@ -9,19 +9,18 @@ export class AddressRepository extends Repository<Address> {
     return addresses;
   }
 
-  async getAddress(name): Promise<Address> {
+  async getAddress(hash): Promise<Address> {
     const address = await this.findOne({
       where: {
-        name: name,
+        hash: hash,
       },
     });
     return address;
   }
 
   async createAddress(createAddressDto: CreateAddressDto): Promise<Address> {
-    const { name, hash } = createAddressDto;
+    const { hash } = createAddressDto;
     const address = new Address();
-    address.name = name;
     address.hash = hash;
     await address.save();
     return address;

@@ -13,9 +13,6 @@ export class Address extends BaseEntity {
   id: number;
 
   @Column({ unique: true })
-  name: string;
-
-  @Column({ unique: true })
   hash: string;
 
   @ManyToMany(() => Transaction, (transaction) => transaction.addresses)
