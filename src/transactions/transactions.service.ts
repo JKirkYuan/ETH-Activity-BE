@@ -19,16 +19,18 @@ export class TransactionsService {
     const result: TransactionResponse[] = await handleScrape();
 
     for (let i = 0; i < result.length; i++) {
-      const transaction: CreateTransactionDto = {
-        txnDate: result[i].date,
-        eth: result[i].eth,
-      };
-      await this.transactionRepository.createTransaction(
-        transaction,
-        result[i].block,
-        result[i].from,
-        result[i].to,
-      );
+      if (result[i].from !== result[i].to) {
+        const transaction: CreateTransactionDto = {
+          txnDate: result[i].date,
+          eth: result[i].eth,
+        };
+        await this.transactionRepository.createTransaction(
+          transaction,
+          result[i].block,
+          result[i].from,
+          result[i].to,
+        );
+      }
     }
   }
 
