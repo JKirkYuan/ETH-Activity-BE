@@ -13,7 +13,6 @@ export class TransactionsService {
     @InjectRepository(TransactionRepository)
     private transactionRepository: TransactionRepository,
   ) {}
-  private readonly logger = new Logger(TransactionsService.name);
 
   @Interval(10000)
   async handleInterval() {

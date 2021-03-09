@@ -4,15 +4,17 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
+  Unique,
 } from 'typeorm';
 import { Transaction } from 'src/transactions/entities/transaction.entity';
 
 @Entity()
+@Unique(['blockNumber'])
 export class Block extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column()
   blockNumber: number;
 
   @Column()
