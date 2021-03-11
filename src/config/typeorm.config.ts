@@ -1,3 +1,4 @@
+import { readFileSync } from 'fs';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 export const typeOrmConfigDev: TypeOrmModuleOptions = {
@@ -22,6 +23,6 @@ export const typeOrmConfigProd: TypeOrmModuleOptions = {
   ssl: {
     require: true,
     rejectUnauthorized: false,
-    ca: process.env.SSL_CERT,
+    ca: readFileSync(__dirname + '/ca-certificate.crt'),
   },
 };
