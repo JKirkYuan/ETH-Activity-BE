@@ -14,6 +14,7 @@ export const typeOrmConfigDev: TypeOrmModuleOptions = {
 
 export const typeOrmConfigProd: TypeOrmModuleOptions = {
   url: process.env.DATABASE_URL,
+  type: 'postgres',
   synchronize: true,
   logging: false,
   entities: [__dirname + '../**/*.entity{.ts, .js}'],
