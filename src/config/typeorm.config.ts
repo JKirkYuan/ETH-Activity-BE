@@ -13,7 +13,6 @@ export const typeOrmConfigDev: TypeOrmModuleOptions = {
 };
 
 export const typeOrmConfigProd: TypeOrmModuleOptions = {
-  type: 'postgres',
   url: process.env.DATABASE_URL,
   synchronize: true,
   logging: false,
@@ -22,5 +21,6 @@ export const typeOrmConfigProd: TypeOrmModuleOptions = {
   ssl: {
     require: true,
     rejectUnauthorized: false,
+    ca: process.env.SSL_CERT,
   },
 };
