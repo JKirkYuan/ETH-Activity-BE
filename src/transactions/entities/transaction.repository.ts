@@ -5,14 +5,42 @@ import { Block } from 'src/blocks/entities/block.entity';
 import { BlockRepository } from 'src/blocks/entities/block.repository';
 import { Address } from 'src/addresses/entities/address.entity';
 import { AddressRepository } from 'src/addresses/entities/address.repository';
+import { FilterTransactionsDto } from '../dto/get-transactions.dto';
+import { InternalServerErrorException } from '@nestjs/common';
 
 @EntityRepository(Transaction)
 export class TransactionRepository extends Repository<Transaction> {
-  async getAllTransactions(): Promise<Transaction[]> {
-    const transactions = await this.find({
-      relations: ['block', 'addresses'],
-    });
-    return transactions;
+  async getAllTransactions(
+    filterTransactions: FilterTransactionsDto,
+  ): Promise<Transaction[]> {
+    const { limit, block, address } = filterTransactions;
+
+    const query = this.createQueryBuilder('transaction');
+
+    query.leftJoinAndSelect('transaction.block', 'block');
+
+    if (limit) {
+      query.take(limit);
+    }
+
+    if (block) {
+      query.andWhere('block.blockNumber = :block', { block });
+    }
+
+    if (address) {
+      query
+        .leftJoinAndSelect('transaction.addresses', 'addresses')
+        .where('addresses.hash LIKE :address', { address });
+    } else {
+      query.leftJoinAndSelect('transaction.addresses', 'addresses');
+    }
+
+    try {
+      const transactions = await query.getMany();
+      return transactions;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 
   async createTransaction(
