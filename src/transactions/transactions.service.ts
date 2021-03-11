@@ -14,7 +14,7 @@ export class TransactionsService {
     private transactionRepository: TransactionRepository,
   ) {}
 
-  @Interval(10000)
+  @Interval(60000)
   async handleInterval() {
     const result: TransactionResponse[] = await handleScrape();
 
