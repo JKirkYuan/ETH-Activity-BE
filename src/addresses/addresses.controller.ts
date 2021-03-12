@@ -3,13 +3,13 @@ import {
   Get,
   Post,
   Body,
-  Put,
   Param,
-  Delete,
+  ValidationPipe,
+  Query,
 } from '@nestjs/common';
 import { AddressesService } from './addresses.service';
 import { CreateAddressDto } from './dto/create-address.dto';
-import { UpdateAddressDto } from './dto/update-address.dto';
+import { FilterAddressesDto } from './dto/get-addresses.dto';
 
 @Controller('addresses')
 export class AddressesController {
@@ -21,22 +21,12 @@ export class AddressesController {
   }
 
   @Get()
-  findAll() {
-    return this.addressesService.findAll();
+  findAll(@Query(ValidationPipe) filterAddresses: FilterAddressesDto) {
+    return this.addressesService.findAll(filterAddresses);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.addressesService.findOne(+id);
-  }
-
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateAddressDto: UpdateAddressDto) {
-    return this.addressesService.update(+id, updateAddressDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.addressesService.remove(+id);
   }
 }

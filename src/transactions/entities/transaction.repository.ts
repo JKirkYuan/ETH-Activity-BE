@@ -18,6 +18,7 @@ export class TransactionRepository extends Repository<Transaction> {
     const query = this.createQueryBuilder('transaction');
 
     query.leftJoinAndSelect('transaction.block', 'block');
+    query.leftJoinAndSelect('transaction.addresses', 'addresses');
 
     if (limit) {
       query.take(limit);
@@ -28,11 +29,7 @@ export class TransactionRepository extends Repository<Transaction> {
     }
 
     if (address) {
-      query
-        .leftJoinAndSelect('transaction.addresses', 'addresses')
-        .where('addresses.hash LIKE :address', { address });
-    } else {
-      query.leftJoinAndSelect('transaction.addresses', 'addresses');
+      query.where('addresses.hash = :address', { address });
     }
 
     try {

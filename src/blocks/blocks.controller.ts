@@ -3,13 +3,13 @@ import {
   Get,
   Post,
   Body,
-  Put,
   Param,
-  Delete,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { BlocksService } from './blocks.service';
 import { CreateBlockDto } from './dto/create-block.dto';
-import { UpdateBlockDto } from './dto/update-block.dto';
+import { FilterBlocksDto } from './dto/get-blocks.dto';
 
 @Controller('blocks')
 export class BlocksController {
@@ -21,22 +21,12 @@ export class BlocksController {
   }
 
   @Get()
-  findAll() {
-    return this.blocksService.findAll();
+  findAll(@Query(ValidationPipe) filterBlocks: FilterBlocksDto) {
+    return this.blocksService.findAll(filterBlocks);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.blocksService.findOne(+id);
-  }
-
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateBlockDto: UpdateBlockDto) {
-    return this.blocksService.update(+id, updateBlockDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.blocksService.remove(+id);
   }
 }

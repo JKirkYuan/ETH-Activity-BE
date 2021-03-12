@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAddressDto } from './dto/create-address.dto';
-import { UpdateAddressDto } from './dto/update-address.dto';
+import { FilterAddressesDto } from './dto/get-addresses.dto';
 import { AddressRepository } from './entities/address.repository';
 
 @Injectable()
@@ -15,8 +15,8 @@ export class AddressesService {
     return this.addressRepository.createAddress(createAddressDto);
   }
 
-  findAll() {
-    return this.addressRepository.getAllAddresses();
+  findAll(filterAddresses: FilterAddressesDto) {
+    return this.addressRepository.getAllAddresses(filterAddresses);
   }
 
   findOne(id: number) {
@@ -24,13 +24,5 @@ export class AddressesService {
       where: { id },
       relations: ['transactions'],
     });
-  }
-
-  update(id: number, updateAddressDto: UpdateAddressDto) {
-    return `This action updates a #${id} address`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} address`;
   }
 }
