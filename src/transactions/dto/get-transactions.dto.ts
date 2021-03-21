@@ -14,4 +14,8 @@ export class FilterTransactionsDto {
   @IsOptional()
   @IsNotEmpty()
   address: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  timeline: string;
 }

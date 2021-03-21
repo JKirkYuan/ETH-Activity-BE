@@ -13,7 +13,7 @@ export class TransactionRepository extends Repository<Transaction> {
   async getAllTransactions(
     filterTransactions: FilterTransactionsDto,
   ): Promise<Transaction[]> {
-    const { limit, block, address } = filterTransactions;
+    const { limit, block, address, timeline } = filterTransactions;
 
     const query = this.createQueryBuilder('transaction');
 
@@ -30,6 +30,30 @@ export class TransactionRepository extends Repository<Transaction> {
 
     if (address) {
       query.where('addresses.hash = :address', { address });
+    }
+
+    if (timeline) {
+      const date = new Date();
+
+      if (timeline === '1') {
+        date.setDate(date.getDate() - 1);
+        query.where('transaction.txnDate >= :date', { date });
+      }
+
+      if (timeline === '3') {
+        date.setDate(date.getDate() - 3);
+        query.where('transaction.txnDate >= :date', { date });
+      }
+
+      if (timeline === '5') {
+        date.setDate(date.getDate() - 5);
+        query.where('transaction.txnDate >= :date', { date });
+      }
+
+      if (timeline === '30') {
+        date.setDate(date.getDate() - 30);
+        query.where('transaction.txnDate >= :date', { date });
+      }
     }
 
     try {

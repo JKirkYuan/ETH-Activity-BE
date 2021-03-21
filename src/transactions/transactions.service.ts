@@ -60,7 +60,26 @@ export class TransactionsService {
   async findAll(
     filterTransactions: FilterTransactionsDto,
   ): Promise<Transaction[]> {
-    let value: Transaction[] = await this.cacheManager.get('transactions');
+    const { timeline } = filterTransactions;
+    let transactionKey = 'transactions';
+
+    if (timeline === '1') {
+      transactionKey = 'transactions1';
+    }
+
+    if (timeline === '3') {
+      transactionKey = 'transactions3';
+    }
+
+    if (timeline === '5') {
+      transactionKey = 'transactions5';
+    }
+
+    if (timeline === '30') {
+      transactionKey = 'transactions30';
+    }
+
+    let value: Transaction[] = await this.cacheManager.get(transactionKey);
 
     if (!value) {
       try {
@@ -71,7 +90,7 @@ export class TransactionsService {
         throw new InternalServerErrorException();
       }
 
-      await this.cacheManager.set('transactions', value, { ttl: 60 });
+      await this.cacheManager.set(transactionKey, value, { ttl: 60 });
     }
 
     return value;
