@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
 import { typeOrmConfigDev, typeOrmConfigProd } from './config/typeorm.config';
@@ -16,6 +16,7 @@ const typeOrmConfig =
     TransactionsModule,
     BlocksModule,
     AddressesModule,
+    CacheModule.register(),
   ],
 })
 export class AppModule {}

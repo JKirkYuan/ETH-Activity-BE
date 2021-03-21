@@ -11,7 +11,7 @@ export class AddressRepository extends Repository<Address> {
     const { address, limit } = filterAddresses;
     const query = this.createQueryBuilder('address');
 
-    query.leftJoinAndSelect('address.transactions', 'transactions');
+    query.innerJoinAndSelect('address.transactions', 'transactions');
 
     if (address) {
       query.where('address.hash = :address', { address });

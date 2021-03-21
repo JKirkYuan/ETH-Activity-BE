@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TransactionsService } from './transactions.service';
 import { TransactionsController } from './transactions.controller';
@@ -13,6 +13,7 @@ import { BlockRepository } from 'src/blocks/entities/block.repository';
       AddressRepository,
       BlockRepository,
     ]),
+    CacheModule.register(),
   ],
   controllers: [TransactionsController],
   providers: [TransactionsService],
