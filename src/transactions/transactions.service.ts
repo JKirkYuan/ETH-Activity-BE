@@ -23,25 +23,25 @@ export class TransactionsService {
     private cacheManager: Cache,
   ) {}
 
-  // @Interval(600000)
-  // async handleInterval() {
-  //   const result: TransactionResponse[] = await handleScrape();
+  @Interval(600000)
+  async handleInterval() {
+    const result: TransactionResponse[] = await handleScrape();
 
-  //   for (let i = 0; i < result.length; i++) {
-  //     if (result[i].from !== result[i].to) {
-  //       const transaction: CreateTransactionDto = {
-  //         txnDate: result[i].date,
-  //         eth: result[i].eth,
-  //       };
-  //       await this.transactionRepository.createTransaction(
-  //         transaction,
-  //         result[i].block,
-  //         result[i].from,
-  //         result[i].to,
-  //       );
-  //     }
-  //   }
-  // }
+    for (let i = 0; i < result.length; i++) {
+      if (result[i].from !== result[i].to) {
+        const transaction: CreateTransactionDto = {
+          txnDate: result[i].date,
+          eth: result[i].eth,
+        };
+        await this.transactionRepository.createTransaction(
+          transaction,
+          result[i].block,
+          result[i].from,
+          result[i].to,
+        );
+      }
+    }
+  }
 
   create(
     createTransactionDto: CreateTransactionDto,
@@ -71,7 +71,7 @@ export class TransactionsService {
         throw new InternalServerErrorException();
       }
 
-      await this.cacheManager.set('transactions', value, { ttl: 1000 });
+      await this.cacheManager.set('transactions', value, { ttl: 60 });
     }
 
     return value;
