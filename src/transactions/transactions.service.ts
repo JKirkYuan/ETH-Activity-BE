@@ -90,7 +90,7 @@ export class TransactionsService {
         throw new InternalServerErrorException();
       }
 
-      await this.cacheManager.set(transactionKey, value, { ttl: 60 });
+      await this.cacheManager.set(transactionKey, value, { ttl: 200 });
     }
 
     return value;
