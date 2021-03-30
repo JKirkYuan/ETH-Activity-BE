@@ -8,13 +8,13 @@ export class AddressRepository extends Repository<Address> {
   async getAllAddresses(
     filterAddresses: FilterAddressesDto,
   ): Promise<Address[]> {
-    const { address, limit } = filterAddresses;
+    const { hash, limit } = filterAddresses;
     const query = this.createQueryBuilder('address');
 
     query.innerJoinAndSelect('address.transactions', 'transactions');
 
-    if (address) {
-      query.where('address.hash = :address', { address });
+    if (hash) {
+      query.where('address.hash = :address', { address: hash });
     }
 
     if (limit) {

@@ -6,5 +6,5 @@ export class FilterAddressesDto {
 
   @IsOptional()
   @IsNotEmpty()
-  address: string;
+  hash: string;
 }
