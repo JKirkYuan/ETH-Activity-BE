@@ -43,7 +43,7 @@ export class AddressesService {
         throw new InternalServerErrorException();
       }
 
-      await this.cacheManager.set(key, value, { ttl: 200 });
+      await this.cacheManager.set(key, value, { ttl: 60 });
     }
 
     return value;
