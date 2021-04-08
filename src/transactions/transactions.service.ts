@@ -60,7 +60,7 @@ export class TransactionsService {
   async findAll(
     filterTransactions: FilterTransactionsDto,
   ): Promise<Transaction[]> {
-    const { timeline } = filterTransactions;
+    const { limit, offset, block, address, timeline } = filterTransactions;
     let transactionKey = 'transactions';
 
     if (timeline === '1') {
@@ -77,6 +77,22 @@ export class TransactionsService {
 
     if (timeline === '30') {
       transactionKey = 'transactions30';
+    }
+
+    if (limit) {
+      transactionKey + limit;
+    }
+
+    if (offset) {
+      transactionKey + offset;
+    }
+
+    if (block) {
+      transactionKey + block;
+    }
+
+    if (address) {
+      transactionKey + address;
     }
 
     let value: Transaction[] = await this.cacheManager.get(transactionKey);
