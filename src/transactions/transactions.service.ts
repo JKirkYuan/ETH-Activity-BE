@@ -23,7 +23,7 @@ export class TransactionsService {
     private cacheManager: Cache,
   ) {}
 
-  @Interval(600000)
+  @Interval(3600000)
   async handleInterval() {
     const result: TransactionResponse[] = await handleScrape();
 
