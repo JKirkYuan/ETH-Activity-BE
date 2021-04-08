@@ -20,18 +20,6 @@ export class TransactionRepository extends Repository<Transaction> {
     query.leftJoinAndSelect('transaction.block', 'block');
     query.leftJoinAndSelect('transaction.addresses', 'addresses');
 
-    if (limit) {
-      query.take(limit);
-    }
-
-    if (block) {
-      query.andWhere('block.blockNumber = :block', { block });
-    }
-
-    if (address) {
-      query.where('addresses.hash = :address', { address });
-    }
-
     if (timeline) {
       const date = new Date();
 
@@ -54,6 +42,18 @@ export class TransactionRepository extends Repository<Transaction> {
         date.setDate(date.getDate() - 30);
         query.where('transaction.txnDate >= :date', { date });
       }
+    }
+
+    if (limit) {
+      query.take(limit);
+    }
+
+    if (block) {
+      query.andWhere('block.blockNumber = :block', { block });
+    }
+
+    if (address) {
+      query.where('addresses.hash = :address', { address });
     }
 
     try {
