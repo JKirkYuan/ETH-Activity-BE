@@ -21,7 +21,7 @@ export class TransactionRepository extends Repository<Transaction> {
     query.leftJoinAndSelect('transaction.addresses', 'addresses');
 
     if (timeline) {
-      const date = new Date();
+      const date = new Date('04-04-2021');
 
       if (timeline === '1') {
         date.setDate(date.getDate() - 1);
