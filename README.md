@@ -29,6 +29,59 @@ $ yarn start:dev
 $ yarn start:prod
 ```
 
+## Endpoints
+
+- **URL: /transactions**
+
+  - Method: **GET**
+  - Optional Filter Parameters
+    Limit: number of transactions to fetch
+
+    Offset: start index of fetch
+
+    Block: a number for which all transactions from the block will be returned
+
+    Address: hash value or string in which all transactions that include the address will be returned
+
+    Timeline: specified by 1,3,5, and 30. Displays transactions between now and the timeline specified
+
+  - Success:
+    - Code: 200
+    - Response: List of Transactions
+  - Error:
+    - Code: 500
+    - Response: Internal Server Error
+
+- **URL: /addresses**
+
+  - Method: **GET**
+  - Optional Filter Parameters
+    Limit: number of addresses to fetch
+
+    Hash: hash value or string in which all transactions including the hash will be returned
+
+  - Success:
+    - Code: 200
+    - Response: List of objects where each contains id of address, hash value and array of Transactions associated with that address
+  - Error:
+    - Code: 500
+    - Response: Internal Server Error
+
+- **URL: /blocks**
+
+  - Method: **GET**
+  - Optional Filter Parameters
+    Limit: number of blocks to fetch
+
+    Block: Filter by the block number
+
+  - Success:
+    - Code: 200
+    - Response: List of objects where each contains id of block, blockNumber and array of Transactions associated with that block
+  - Error:
+    - Code: 500
+    - Response: Internal Server Error
+
 ## License
 
 ETH-Activity BE is [MIT licensed](LICENSE).
